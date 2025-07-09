@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uniform Size Selector</title>
+  </head>
+
+  <body>
+      <!--<h1 class="title">Uniform Size Selector</h1>-->
+ <p><fieldset style="max-width: 150px; float: left; margin-right: 20px;">
+  <legend>Select your gender</legend>
+   <div>
+    <input type="radio" id="female" name="gender" value="F" checked onclick="hide();"/>
+    <label for="female">Female</label>
+  </div>
+  <div>
+    <input type="radio" id="male" name="gender" value="M" onclick="hide();"/>
+    <label for="male">Male</label>
+  </div>
+ 
+</fieldset></p>
+<p><fieldset style="max-width: 150px; min-width: 130px; float: left; margin-bottom:20px;">
+  <legend>Select units</legend>
+  <div>
+    <input type="radio" id="cm" name="unit" value="cm" checked />
+    <label for="cm">cm</label>
+  </div>
+  <div>
+    <input type="radio" id="inch" name="unit" value="inch" />
+    <label for="inch">inch</label>
+  </div>
+</fieldset></p><br><br>
+      <p style="margin-top: 60px; min-width: 100px;"><h4 style="color:purple;">All fields are mandatory</h4></p>
+      <p><h3>Chest</h3><input type="number" id="chest" required></p>
+      <p><h3>Waist</h3> <input type="number" id="waist" required></p>
+      <p><h3>Hips</h3><input type="number" id="hips" required></p>
+      <div class="neck" id="neckgroup" style="display: none;"><p><h3>Neck</h3><input type="number" id="neck"
+      required></p></div>
+      <button type="button" style="background-color: purple; color: white; padding: 10px; border-radius: 4px;border: none;"
+      onclick="sizeSelector()">Get my sizes!</button>
+      <p><h4 style="color:purple;">Sizes to order: </h4></p>
+      <p id ="results">No selection available</p>
+  
+    <script>
+  
+    function hide(){
+          document.getElementById('neckgroup').style.display ='none';
+          }
+   function show(){
+        document.getElementById('neckgroup').style.display = 'block';
+         }
+    function clearForm(){
+    document.getElementById('chest').value="";
+    document.getElementById('waist').value="";
+    document.getElementById('hips').value="";
+    document.getElementById('neck').value="";
+  }
+  </script>
+  
+  <script>
+    const clothingItems=[
+               {
+                 name: "Puffer vest/ Fleece jacket/ Parka",
+                 gender: "M",
+                 sizes: [{
+                   size: "XS",
+                   chestMin:73,
+                   chestMax:80
+                 },
+                 {
+                   size: "S",
+                   chestMin:81,
+                   chestMax:88
+                 },
+                 {
+                   size: "M",
+                   chestMin:89,
+                   chestMax:96
+                 },
+                 {
+                   size: "L",
+                   chestMin:97,
+                   chestMax:104
+                 },
+                 {
+                   size: "XL",
+                   chestMin:105,
+                   chestMax:112
+                 },
+                 {
+                   size: "XXL",
+                   chestMin:113,
+                   chestMax:120
+                 },
+                 {
+                   size: "3XL",
+                   chestMin:121,
+                   chestMax:128
+                 },
+                 {
+                   size: "4XL",
+                   chestMin:129,
+                   chestMax:136
+                 },
+                 {
+                   size: "5XL",
+                   chestMin:137,
+                   chestMax:144
+                 },
+                 {
+                   size: "6XL",
+                   chestMin:145,
+                   chestMax:152
+                 }]
+               },
+               {
+                 name: "Suit jacket",
+                 gender: "M",
+                 sizes: [{
+                   size: "44",
+                   chestMin:85,
+                   chestMax:88
+                 },
+                 {
+                   size: "46",
+                   chestMin:89,
+                   chestMax:92
+                 },
+                 {
+                   size: "48",
+                   chestMin:93,
+                   chestMax:96
+                 },
+                 {
+                   size: "50",
+                   chestMin:97,
+                   chestMax:100
+                 },
+                 {
+                   size: "52",
+                   chestMin:101,
+                   chestMax:104
+                 },
+                 {
+                   size: "54",
+                   chestMin:105,
+                   chestMax:108
+                 },
+                 {
+                   size: "56",
+                   chestMin:109,
+                   chestMax:112
+                 },
+                 {
+                   size: "58",
+                   chestMin:113,
+                   chestMax:116
+                 },
+                  {
+                   size: "60",
+                   chestMin:117,
+                   chestMax:120
+                 },
+                  {
+                   size: "62",
+                   chestMin:121,
+                   chestMax:124
+                 },
+                  {
+                   size: "64",
+                   chestMin:125,
+                   chestMax:128
+                 }]
+               },
+               {
+                 name: "Shirt",
+                 gender: "M",
+                 sizes: [{
+                   size: "XS",
+                   chestRank:1,
+                   chestMin:73,
+                   chestMax:80,
+                   waistRank:3,
+                   waistMin:61,
+                   waistMax:68,
+                   neckRank:2,
+                   neckMin:33,
+                   neckMax:34
+                 },
+                 {
+                   size: "S",
+                   chestRank:1,
+                   chestMin:81,
+                   chestMax:88,
+                   waistRank:3,
+                   waistMin:69,
+                   waistMax:76,
+                   neckRank:2,
+                   neckMin:35,
+                   neckMax:36
+                 },
+                 {
+                   size: "M",
+                   chestRank:1,
+                   chestMin:89,
+                   chestMax:96,
+                   waistRank:3,
+                   waistMin:77,
+                   waistMax:84,
+                   neckRank:2,
+                   neckMin:37,
+                   neckMax:38
+                 },
+                 {
+                   size: "L",
+                   chestRank:1,
+                   chestMin:97,
+                   chestMax:104,
+                   waistRank:3,
+                   waistMin:85,
+                   waistMax:92,
+                   neckRank:2,
+                   neckMin:39,
+                   neckMax:40
+                 },
+                 {
+                   size: "XL",
+                   chestRank:1,
+                   chestMin:105,
+                   chestMax:112,
+                   waistRank:3,
+                   waistMin:93,
+                   waistMax:100,
+                   neckRank:2,
+                   neckMin:41,
+                   neckMax:42
+                 },
+                 {
+                   size: "XXL",
+                   chestRank:1,
+                   chestMin:113,
+                   chestMax:120,
+                   waistRank:3,
+                   waistMin:101,
+                   waistMax:108,
+                   neckRank:2,
+                   neckMin:43,
+                   neckMax:44
+                 },
+                 {
+                   size: "3XL",
+                   chestRank:1,
+                   chestMin:121,
+                   chestMax:128,
+                   waistRank:3,
+                   waistMin:109,
+                   waistMax:116,
+                   neckRank:2,
+                   neckMin:45,
+                   neckMax:46
+                 },
+                 {
+                   size: "4XL",
+                   chestRank:1,
+                   chestMin:129,
+                   chestMax:136,
+                   waistRank:3,
+                   chestMin:117,
+                   chestMax:124,
+                   neckRank:2,
+                   neckMin:47,
+                   neckMax:48
+                 },
+                 {
+                   size: "5XL",
+                   chestRank:1,
+                   chestMin:137,
+                   chestMax:144,
+                   waistRank:3,
+                   waistMin:125,
+                   waistMax:132,
+                   neckRank:2,
+                   neckMin:49,
+                   neckMax:50
+                   }
+                 ]
+               },
+                {
+                 name: "Suit trousers/ Cargo pants/ Cargo shorts",
+                 gender: "M",
+                 sizes: [{
+                   size: "36",
+                   waistRank:2,
+                   waistMin:69,
+                   waistMax:72,
+                   hipsRank:1,
+                   hipsMin:84,
+                   hipsMax:87
+                 },
+                 {
+                   size: "38",
+                   waistRank:2,
+                   waistMin:73,
+                   waistMax:76,
+                   hipsRank:1,
+                   hipsMin:88,
+                   hipsMax:90
+                 },
+                 {
+                   size: "40",
+                   waistRank:2,
+                   waistMin:77,
+                   waistMax:80,
+                   hipsRank:1,
+                   hipsMin:91,
+                   hipsMax:93
+                 },
+                 {
+                   size: "42",
+                   waistRank:2,
+                   waistMin:81,
+                   waistMax:84,
+                   hipsRank:1,
+                   hipsMin:94,
+                   hipsMax:97
+                 },
+                 {
+                   size: "44",
+                   waistRank:2,
+                   waistMin:85,
+                   waistMax:88,
+                   hipsRank:1,
+                   hipsMin:98,
+                   hipsMax:101
+                 },
+                 {
+                   size: "46",
+                   waistRank:2,
+                   waistMin:89,
+                   waistMax:92,
+                   hipsRank:1,
+                   hipsMin:102,
+                   hipsMax:104
+                 },
+                 {
+                   size: "48",
+                   waistRank:2,
+                   waistMin:93,
+                   waistMax:96,
+                   hipsRank:1,
+                   hipsMin:105,
+                   hipsMax:107
+                 },
+                 {
+                   size: "50",
+                   waistRank:2,
+                   waistMin:97,
+                   waistMax:100,
+                   hipsRank:1,
+                   hipsMin:108,
+                   hipsMax:111
+                 },
+                 {
+                   size: "52",
+                   waistRank:2,
+                   waistMin:101,
+                   waistMax:104,
+                   hipsRank:1,
+                   hipsMin:112,
+                   hipsMax:114
+                 },
+                 {
+                   size: "54",
+                   waistRank:2,
+                   waistMin:105,
+                   waistMax:108,
+                   hipsRank:1,
+                   hipsMin:115,
+                   hipsMax:117
+                 },
+                 {
+                   size: "56",
+                   waistRank:2,
+                   waistMin:109,
+                   waistMax:112,
+                   hipsRank:1,
+                   hipsMin:118,
+                   hipsMax:121
+                 },
+                 {
+                   size: "58",
+                   waistRank:2,
+                   waistMin:113,
+                   waistMax:116,
+                   hipsRank:1,
+                   hipsMin:122,
+                   hipsMax:125
+                 },
+                 {
+                   size: "60",
+                   waistRank:2,
+                   waistMin:117,
+                   waistMax:120,
+                   hipsRank:1,
+                   hipsMin:126,
+                   hipsMax:128
+                 },
+                 {
+                   size: "62",
+                   waistRank:2,
+                   waistMin:121,
+                   waistMax:124,
+                   hipsRank:1,
+                   hipsMin:129,
+                   hipsMax:132
+                 }]
+                 
+               },
+               
+               {
+                 name: "Puffer vest/ Fleece jacket/ Parka",
+                 gender: "F",
+                 sizes: [{
+                   size: "XS",
+                   chestRank:1,
+                   chestMin:69,
+                   chestMax:76,
+                   hipsRank:2,
+                   hipsMin:77,
+                   hipsMax:84
+                 },
+                 {
+                   size: "S",
+                   chestRank:1,
+                   chestMin:77,
+                   chestMax:84,
+                   hipsRank:2,
+                   hipsMin:85,
+                   hipsMax:92
+                 },
+                 {
+                   size: "M",
+                   chestRank:1,
+                   chestMin:85,
+                   chestMax:92,
+                   hipsRank:2,
+                   hipsMin:93,
+                   hipsMax:100
+                 },
+                 {
+                   size: "L",
+                   chestRank:1,
+                   chestMin:93,
+                   chestMax:100,
+                   hipsRank:2,
+                   hipsMin:101,
+                   hipsMax:108
+                 },
+                 {
+                   size: "XL",
+                   chestRank:1,
+                   chestMin:101,
+                   chestMax:108,
+                   hipsRank:2,
+                   hipsMin:109,
+                   hipsMax:116
+                 },
+                 {
+                   size: "XXL",
+                   chestRank:1,
+                   chestMin:109,
+                   chestMax:120,
+                   hipsRank:2,
+                   hipsMin:117,
+                   hipsMax:128
+                 },
+                 {
+                   size: "3XL",
+                   chestRank:1,
+                   chestMin:121,
+                   chestMax:132,
+                   hipsRank:2,
+                   hipsMin:129,
+                   hipsMax:140
+                 },
+                 {
+                   size: "4XL",
+                   chestRank:1,
+                   chestMin:133,
+                   chestMax:144,
+                   hipsRank:2,
+                   hipsMin:141,
+                   hipsMax:152
+                 },
+                 {
+                   size: "5XL",
+                   chestRank:1,
+                   chestMin:145,
+                   chestMax:156,
+                   hipsRank:2,
+                   hipsMin:153,
+                   hipsMax:164
+                 }]
+                 
+               },
+               
+               {
+                 name: "Suit jacket/ Shirt",
+                 gender: "F",
+                 sizes: [{
+                   size: "34",
+                   chestRank:1,
+                   chestMin:77,
+                   chestMax:80,
+                   waistRank:3,
+                   waistMin:60,
+                   waistMax:63,
+                   hipsRank:2,
+                   hipsMin:85,
+                   hipsMax:88
+                 },
+                 {
+                   size: "36",
+                   chestRank:1,
+                   chestMin:81,
+                   chestMax:84,
+                   waistRank:3,
+                   waistMin:64,
+                   waistMax:67,
+                   hipsRank:2,
+                   hipsMin:89,
+                   hipsMax:92
+                 },
+                 {
+                   size: "38",
+                   chestRank:1,
+                   chestMin:85,
+                   chestMax:88,
+                   waistRank:3,
+                   waistMin:68,
+                   waistMax:71,
+                   hipsRank:2,
+                   hipsMin:93,
+                   hipsMax:96
+                 },
+                 {
+                   size: "40",
+                   chestRank:1,
+                   chestMin:89,
+                   chestMax:92,
+                   waistRank:3,
+                   waistMin:72,
+                   waistMax:75,
+                   hipsRank:2,
+                   hipsMin:97,
+                   hipsMax:100
+                 },
+                 {
+                   size: "42",
+                   chestRank:1,
+                   chestMin:93,
+                   chestMax:96,
+                   waistRank:3,
+                   waistMin:76,
+                   waistMax:79,
+                   hipsRank:2,
+                   hipsMin:101,
+                   hipsMax:104
+                 },
+                 {
+                   size: "44",
+                   chestRank:1,
+                   chestMin:97,
+                   chestMax:100,
+                   waistRank:3,
+                   waistMin:80,
+                   waistMax:83,
+                   hipsRank:2,
+                   hipsMin:105,
+                   hipsMax:108
+                 },
+                 {
+                   size: "46",
+                   chestRank:1,
+                   chestMin:101,
+                   chestMax:104,
+                   waistRank:3,
+                   waistMin:84,
+                   waistMax:87,
+                   hipsRank:2,
+                   hipsMin:109,
+                   hipsMax:112
+                 },
+                 {
+                   size: "48",
+                   chestRank:1,
+                   chestMin:105,
+                   chestMax:108,
+                   waistRank:3,
+                   waistMin:88,
+                   waistMax:91,
+                   hipsRank:2,
+                   hipsMin:113,
+                   hipsMax:116
+                 },
+                 {
+                   size: "50",
+                   chestRank:1,
+                   chestMin:109,
+                   chestMax:114,
+                   waistRank:3,
+                   waistMin:92,
+                   waistMax:97,
+                   hipsRank:2,
+                   hipsMin:117,
+                   hipsMax:122
+                 },
+                 {
+                   size: "52",
+                   chestRank:1,
+                   chestMin:115,
+                   chestMax:120,
+                   waistRank:3,
+                   waistMin:98,
+                   waistMax:103,
+                   hipsRank:2,
+                   hipsMin:123,
+                   hipsMax:128
+                 },
+                 {
+                   size: "54",
+                   chestRank:1,
+                   chestMin:121,
+                   chestMax:126,
+                   waistRank:3,
+                   waistMin:104,
+                   waistMax:109,
+                   hipsRank:2,
+                   hipsMin:129,
+                   hipsMax:134
+                 },
+                 {
+                   size: "56",
+                   chestRank:1,
+                   chestMin:127,
+                   chestMax:132,
+                   waistRank:3,
+                   waistMin:110,
+                   waistMax:115,
+                   hipsRank:2,
+                   hipsMin:135,
+                   hipsMax:140
+                 },
+                 {
+                   size: "58",
+                   chestRank:1,
+                   chestMin:133,
+                   chestMax:138,
+                   waistRank:3,
+                   waistMin:116,
+                   waistMax:121,
+                   hipsRank:2,
+                   hipsMin:141,
+                   hipsMax:146
+                 },
+                 {
+                   size: "60",
+                   chestRank:1,
+                   chestMin:139,
+                   chestMax:144,
+                   waistRank:3,
+                   waistMin:122,
+                   waistMax:127,
+                   hipsRank:2,
+                   hipsMin:147,
+                   hipsMax:152
+                 }]
+                 
+               },
+               
+               {
+                 name: "Suit trousers/ Skirt/ Skort/ Cargo pants/ Cargo shorts",
+                 gender: "F",
+                 sizes:[{
+                   size: "32",
+                   waistRank:2,
+                   waistMin:65,
+                   waistMax:68,
+                   hipsRank:1,
+                   hipsMin:81,
+                   hipsMax:84
+                 },
+                 {
+                   size: "34",
+                   waistRank:2,
+                   waistMin:69,
+                   waistMax:72,
+                   hipsRank:1,
+                   hipsMin:85,
+                   hipsMax:88
+                 },
+                 {
+                   size: "36",
+                   waistRank:2,
+                   waistMin:73,
+                   waistMax:76,
+                   hipsRank:1,
+                   hipsMin:89,
+                   hipsMax:92
+                 },
+                 {
+                   size: "38",
+                   waistRank:2,
+                   waistMin:77,
+                   waistMax:80,
+                   hipsRank:1,
+                   hipsMin:93,
+                   hipsMax:96
+                 },
+                 {
+                   size: "40",
+                   waistRank:2,
+                   waistMin:81,
+                   waistMax:84,
+                   hipsRank:1,
+                   hipsMin:97,
+                   hipsMax:100
+                 },
+                 {
+                   size: "42",
+                   waistRank:2,
+                   waistMin:85,
+                   waistMax:88,
+                   hipsRank:1,
+                   hipsMin:101,
+                   hipsMax:104
+                 },
+                 {
+                   size: "44",
+                   waistRank:2,
+                   waistMin:89,
+                   waistMax:92,
+                   hipsRank:1,
+                   hipsMin:105,
+                   hipsMax:108
+                 },
+                 {
+                   size: "46",
+                   waistRank:2,
+                   waistMin:93,
+                   waistMax:96,
+                   hipsRank:1,
+                   hipsMin:109,
+                   hipsMax:112
+                 },
+                 {
+                   size: "48",
+                   waistRank:2,
+                   waistMin:97,
+                   waistMax:100,
+                   hipsRank:1,
+                   hipsMin:113,
+                   hipsMax:116
+                 },
+                 {
+                   size: "50",
+                   waistRank:2,
+                   waistMin:101,
+                   waistMax:106,
+                   hipsRank:1,
+                   hipsMin:117,
+                   hipsMax:122
+                 },
+                 {
+                   size: "52",
+                   waistRank:2,
+                   waistMin:107,
+                   waistMax:112,
+                   hipsRank:1,
+                   hipsMin:123,
+                   hipsMax:128
+                 },
+                 {
+                   size: "54",
+                   waistRank:2,
+                   waistMin:113,
+                   waistMax:118,
+                   hipsRank:1,
+                   hipsMin:129,
+                   hipsMax:134
+                 },
+                 {
+                   size: "56",
+                   waistRank:2,
+                   waistMin:119,
+                   waistMax:124,
+                   hipsRank:1,
+                   hipsMin:135,
+                   hipsMax:140
+                 },
+                 {
+                   size: "58",
+                   waistRank:2,
+                   waistMin:125,
+                   waistMax:130,
+                   hipsRank:1,
+                   hipsMin:141,
+                   hipsMax:146
+                 },
+                 {
+                   size: "60",
+                   waistRank:2,
+                   waistMin:131,
+                   waistMax:136,
+                   hipsRank:1,
+                   hipsMin:147,
+                   hipsMax:152
+                 }]
+                 
+               },
+                {
+                 name: "Polo/ T-shirt",
+                 gender: "M",
+                 sizes: [{
+                   size: "XS",
+                   chestMin:79,
+                   chestMax:86
+                 },
+                 {
+                   size: "S",
+                   chestMin:87,
+                   chestMax:92
+                 },
+                 {
+                   size: "M",
+                   chestMin:93,
+                   chestMax:98
+                 },
+                 {
+                   size: "L",
+                   chestMin:99,
+                   chestMax:104
+                 },
+                 {
+                   size: "XL",
+                   chestMin:105,
+                   chestMax:110
+                 },
+                 {
+                   size: "XXL",
+                   chestMin:111,
+                   chestMax:116
+                 },
+                 {
+                   size: "3XL",
+                   chestMin:117,
+                   chestMax:122
+                 },
+                 {
+                   size: "4XL",
+                   chestMin:123,
+                   chestMax:128
+                 },
+                 {
+                   size: "5XL",
+                   chestMin:129,
+                   chestMax:134
+                 },
+                 {
+                   size: "6XL",
+                   chestMin:135,
+                   chestMax:140
+                 }]
+                },
+                {
+                 name: "Polo",
+                 gender: "F",
+                 sizes: [{
+                   size: "XS",
+                   chestMin:73,
+                   chestMax:79
+                 },
+                 {
+                   size: "S",
+                   chestMin:80,
+                   chestMax:85
+                 },
+                 {
+                   size: "M",
+                   chestMin:86,
+                   chestMax:91
+                 },
+                 {
+                   size: "L",
+                   chestMin:92,
+                   chestMax:97
+                 },
+                 {
+                   size: "XL",
+                   chestMin:98,
+                   chestMax:103
+                 },
+                 {
+                   size: "XXL",
+                   chestMin:104,
+                   chestMax:109
+                 },
+                 {
+                   size: "3XL",
+                   chestMin:110,
+                   chestMax:115
+                 },
+                 {
+                   size: "4XL",
+                   chestMin:116,
+                   chestMax:121
+                 },
+                 {
+                   size: "5XL",
+                   chestMin:122,
+                   chestMax:127
+                 }]
+                },
+                {
+                 name: "Sweatshirt",
+                 gender: "M",
+                 sizes: [{
+                   size: "XS",
+                   chestMin:78,
+                   chestMax:85
+                 },
+                 {
+                   size: "S",
+                   chestMin:86,
+                   chestMax:93
+                 },
+                 {
+                   size: "M",
+                   chestMin:94,
+                   chestMax:101
+                 },
+                 {
+                   size: "L",
+                   chestMin:102,
+                   chestMax:109
+                 },
+                 {
+                   size: "XL",
+                   chestMin:110,
+                   chestMax:119
+                 },
+                 {
+                   size: "XXL",
+                   chestMin:120,
+                   chestMax:129
+                 },
+                 {
+                   size: "3XL",
+                   chestMin:130,
+                   chestMax:139
+                 },
+                 {
+                   size: "4XL",
+                   chestMin:140,
+                   chestMax:149
+                 },
+                 {
+                   size: "5XL",
+                   chestMin:150,
+                   chestMax:157
+                 }]
+                },
+                {
+                 name: "Sweatshirt",
+                 gender: "F",
+                 sizes: [{
+                   size: "XS",
+                   chestMin:77,
+                   chestMax:83
+                 },
+                 {
+                   size: "S",
+                   chestMin:84,
+                   chestMax:90
+                 },
+                 {
+                   size: "M",
+                   chestMin:91,
+                   chestMax:97
+                 },
+                 {
+                   size: "L",
+                   chestMin:98,
+                   chestMax:104
+                 },
+                 {
+                   size: "XL",
+                   chestMin:105,
+                   chestMax:116
+                 },
+                 {
+                   size: "XXL",
+                   chestMin:117,
+                   chestMax:128
+                 },
+                 {
+                   size: "3XL",
+                   chestMin:129,
+                   chestMax:140
+                 },
+                 {
+                   size: "4XL",
+                   chestMin:141,
+                   chestMax:152
+                 },
+                 {
+                   size: "5XL",
+                   chestMin:153,
+                   chestMax:156
+                 }]
+                }
+  ];
+  
+  function inchToCm(x){
+    return x = Math.round(x * 2.54);
+  }
+  
+  function numSize(x){
+    stringSize=x;
+    switch(stringSize){
+    case 'XS':
+      stringSize=1;
+      break;
+    case 'S':
+      stringSize=2;
+      break;
+    case 'M':
+      stringSize=3;
+      break;
+    case 'L':
+      stringSize=4;
+      break;
+    case 'XL':
+      stringSize=5;
+      break;
+    case 'XXL':
+      stringSize=6;
+      break;
+    case '3XL':
+      stringSize=7;
+      break;
+    case '4XL':
+      stringSize=8;
+      break;
+    case '5XL':
+      stringSize=9;
+      break;
+    case '6XL':
+      stringSize=10;
+      break;
+    }
+      return x;
+  }
+  
+  function sizeSelector(){
+    var genders=document.getElementsByName('gender');
+    var selectedGender='';
+    for(var i = 0; i < genders.length; i++){
+       if(genders[i].checked){
+        selectedGender = genders[i].value;
+      }
+    }
+    
+    if(selectedGender==="M"){
+      maleSizer();
+    }
+     if(selectedGender==="F"){
+      femaleSizer();
+    }
+  }
+  
+  
+  function maleSizer(){
+    var chest=0; 
+    var waist=0;
+    var hips=0;
+    var neck=0;
+    var size1='';
+    var size2='';
+    var size3='';
+    var size4='';
+    var size5='';
+    var size6='';
+    var size7='';
+    var size8='';
+    
+    var units = document.getElementsByName('unit');
+    var selectedUnit='';
+    for(var i = 0; i < units.length; i++){
+       if(units[i].checked){
+        selectedUnit = units[i].value;
+      }
+    }
+    
+     //converts inch to cm if inch is selected
+    if(selectedUnit==="inch"){
+      chest = inchToCm(document.getElementById('chest').value);
+      waist = inchToCm(document.getElementById('waist').value);
+      hips = inchToCm(document.getElementById('hips').value);
+      neck = inchToCm(document.getElementById('neck').value);
+    } else if(selectedUnit==="cm"){
+      chest = document.getElementById('chest').value;
+      waist = document.getElementById('waist').value;
+      hips = document.getElementById('hips').value;
+      neck = document.getElementById('neck').value;
+    }
+    
+    
+    
+    //calculates the size of item 1
+    if(chest>clothingItems[0].sizes[9].chestMax){
+      size1="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj1=clothingItems[0].sizes.filter(function(item){
+      if(chest<clothingItems[0].sizes[0].chestMin){
+        chest=clothingItems[0].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    
+     var values1=Object.values(sizeObj1);
+     size1=values1[0].size;
+    }
+    
+    //calculates the size of item 2
+     if(chest>clothingItems[1].sizes[10].chestMax){
+      size2="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj2=clothingItems[1].sizes.filter(function(item){
+      if(chest<clothingItems[1].sizes[0].chestMin){
+        chest=clothingItems[1].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    
+     var values2=Object.values(sizeObj2);
+     size2=values2[0].size;
+    }
+    
+    //calculates the size of item 3
+    if(chest>clothingItems[2].sizes[8].chestMax
+     || neck>clothingItems[2].sizes[8].neckMax || waist>clothingItems[2].sizes[8].waistMax){
+      size3="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj3=clothingItems[2].sizes.filter(function(item){
+      if(chest<clothingItems[2].sizes[0].chestMin){
+        chest=clothingItems[2].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+        return item;
+      }
+
+    });
+    }
+    
+    // sizeObj4=clothingItems[2].sizes.filter(function(item){
+    //   if(neck<clothingItems[2].sizes[0].neckMin){
+    //     neck=clothingItems[2].sizes[0].neckMin;
+    //   }
+    //   if(neck>=item.neckMin && neck<=item.neckMax){
+    //     return item;
+    //   }
+
+    // });
+    
+    // sizeObj7=clothingItems[2].sizes.filter(function(item){
+    //   if(waist<clothingItems[2].sizes[0].waistMin){
+    //     waist=clothingItems[2].sizes[0].waistMin;
+    //   }
+    //   if(waist>=item.waistMin && waist<=item.waistMax){
+    //     return item;
+    //   }
+
+    // });
+    
+    var values3=Object.values(sizeObj3);
+    size3=values3[0].size;
+    // numSize3=numSize(size3);
+    // var values4=Object.values(sizeObj4);
+    // size4=values4[0].size;
+    // numSize4=numSize(size4);
+    // var values7=Object.values(sizeObj7);
+    // size7=values7[0].size;
+    // numSize7=numSize(size7);
+    
+    // if(size3!==size4 || size3!==size7){
+    //   if(numSize3>=numSize4 && numSize3>=numSize7){
+    //   size3="You are between sizes. We recommend to favour chest and select "+size3+ ". You can also look at the grid to refine your choice.";
+    // } else if (numSize7>=numSize3){
+    //   size3="You are between sizes. We recommend to favour waist and select  "+size7+ ". You can also look at the grid to refine your choice.";
+    // } else {
+    //   size3="You are between sizes. We recommend to favour chest and select  "+size3+ ". You can also look at the grid to refine your choice.";
+    // }
+    // }
+    
+    //calculates the size of item 4
+    // if(waist>clothingItems[3].sizes[13].waistMax
+    // || hips>clothingItems[3].sizes[13].hipsMax){
+    //   size5="Unable to advise. Please, contact the provider.";
+    // } else {
+    // sizeObj5=clothingItems[3].sizes.filter(function(item){
+    //   if(waist<clothingItems[3].sizes[0].waistMin){
+    //     waist=clothingItems[3].sizes[0].waistMin;
+    //   }
+    //   if(waist>=item.waistMin && waist<=item.waistMax){
+    //       return item;
+    //     }
+    // });
+    // }
+    
+    sizeObj6=clothingItems[3].sizes.filter(function(item){
+      if(hips<clothingItems[3].sizes[0].hipsMin){
+        hips=clothingItems[3].sizes[0].hipsMin;
+      }
+      if(hips>=item.hipsMin && hips<=item.hipsMax){
+          return item;
+        }
+    });
+    
+    // var values5=Object.values(sizeObj5);
+    // size5=values5[0].size;
+    var values6=Object.values(sizeObj6);
+    size6=values6[0].size;
+    
+    // if(size5!==size6){
+    //   size5="You are between sizes. We think "+Math.max(size5,size6)+ " might be a better fit. You can also look at the grid to refine your choice.";
+    // }
+    
+    if(chest>clothingItems[7].sizes[9].chestMax){
+      size1="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj7=clothingItems[7].sizes.filter(function(item){
+      if(chest<clothingItems[7].sizes[0].chestMin){
+        chest=clothingItems[7].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    }
+    
+     var values7=Object.values(sizeObj7);
+     size7=values7[0].size;
+     
+    //calculates the size of item 5
+    if(chest>clothingItems[9].sizes[8].chestMax){
+      size1="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj8=clothingItems[9].sizes.filter(function(item){
+      if(chest<clothingItems[9].sizes[0].chestMin){
+        chest=clothingItems[9].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    
+     var values8=Object.values(sizeObj8);
+     size8=values8[0].size;
+    }
+    
+    
+    return document.getElementById('results').innerHTML=
+    '<li>'+'<b>'+clothingItems[0].name + ': ' + '</b>'+ size1 + '</li>' +
+    '<li>'+'<b>'+clothingItems[1].name + ': ' + '</b>'+ size2 + '</li>' +
+    '<li>'+'<b>'+clothingItems[2].name + ': ' + '</b>'+ size3 + '</li>' +
+    '<li>'+'<b>'+clothingItems[3].name + ': ' + '</b>'+ size6 + '</li>' +
+    '<li>'+'<b>'+clothingItems[7].name + ': ' + '</b>'+ size7 + '</li>' +
+    '<li>'+'<b>'+clothingItems[9].name + ': ' + '</b>'+ size8 + '</li>';
+    
+  }
+  
+  function femaleSizer(){
+    var chest=0; 
+    var waist=0;
+    var hips=0;
+    var size1='';
+    var size2='';
+    var size3='';
+    var size4='';
+    var size5='';
+    var size6='';
+    var size7='';
+    var size8='';
+    
+    var units = document.getElementsByName('unit');
+    var selectedUnit='';
+    for(var i = 0; i < units.length; i++){
+       if(units[i].checked){
+        selectedUnit = units[i].value;
+      }
+    }
+    
+    if(selectedUnit==="inch"){
+      chest = inchToCm(document.getElementById('chest').value);
+      waist = inchToCm(document.getElementById('waist').value);
+      hips = inchToCm(document.getElementById('hips').value);
+    } else if(selectedUnit==="cm"){
+      chest = document.getElementById('chest').value;
+      waist = document.getElementById('waist').value;
+      hips = document.getElementById('hips').value;
+    }
+    
+    //calculates the size of item 1
+    if(chest>clothingItems[4].sizes[6].chestMax){
+      size1="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj1=clothingItems[4].sizes.filter(function(item){
+      if(chest<clothingItems[4].sizes[0].chestMin){
+        chest=clothingItems[4].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    
+     var values1=Object.values(sizeObj1);
+     size1=values1[0].size;
+
+    }
+     
+     //calculates the size of item 2
+     if(chest>clothingItems[5].sizes[13].chestMax
+     || hips>clothingItems[5].sizes[13].hipsMax){
+      size2="Unable to advise. Please, contact the provider.";
+    } else {
+      sizeObj2=clothingItems[5].sizes.filter(function(item){
+      if(chest<clothingItems[5].sizes[0].chestMin){
+        chest=clothingItems[5].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    
+    // sizeObj3=clothingItems[5].sizes.filter(function(item){
+    //   if(hips<clothingItems[5].sizes[0].hipsMin){
+    //     hips=clothingItems[5].sizes[0].hipsMin;
+    //   }
+    //   if(hips>=item.hipsMin && hips<=item.hipsMax){
+    //       return item;
+    //     }
+    // });
+    
+     var values2=Object.values(sizeObj2);
+     size2=values2[0].size;
+    // var values3=Object.values(sizeObj3);
+    // size3=values3[0].size;
+     
+    // if(size2!==size3){
+    //   size2="You are between sizes. We think "+Math.max(size2,size3)+ " might be a better fit. You can also look at the grid to refine your choice.";
+    // }
+    }
+
+   //calculates the size of item 3
+   if(waist>clothingItems[6].sizes[14].waistMax
+     || hips>clothingItems[6].sizes[14].hipsMax){
+      size4="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj4=clothingItems[6].sizes.filter(function(item){
+      if(waist<clothingItems[6].sizes[0].waistMin){
+        waist=clothingItems[6].sizes[0].waistMin;
+      }
+      if(waist>=item.waistMin && waist<=item.waistMax){
+          return item;
+        }
+    });
+    
+    sizeObj5=clothingItems[6].sizes.filter(function(item){
+      if(hips<clothingItems[6].sizes[0].hipsMin){
+        hips=clothingItems[6].sizes[0].hipsMin;
+      }
+      if(hips>=item.hipsMin && hips<=item.hipsMax){
+          return item;
+        }
+    });
+    
+    var values4=Object.values(sizeObj4);
+    size4=values4[0].size;
+    var values5=Object.values(sizeObj5);
+    size5=values5[0].size;
+    
+    // if(size4!==size5){
+    //   size4="You are between sizes. We think "+Math.max(size4,size5)+ " might be a better fit. You can also look at the grid to refine your choice.";
+    // }
+    }
+    
+    if(chest>clothingItems[8].sizes[8].chestMax){
+      size1="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj6=clothingItems[8].sizes.filter(function(item){
+      if(chest<clothingItems[8].sizes[0].chestMin){
+        chest=clothingItems[8].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    }
+    
+     var values6=Object.values(sizeObj6);
+     size6=values6[0].size;
+    
+    if(chest>clothingItems[7].sizes[9].chestMax){
+      size1="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj7=clothingItems[7].sizes.filter(function(item){
+      if(chest<clothingItems[7].sizes[0].chestMin){
+        chest=clothingItems[7].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    }
+    
+     var values7=Object.values(sizeObj7);
+     size7=values7[0].size;
+     
+    //calculates the size of item 5
+    if(chest>clothingItems[10].sizes[8].chestMax){
+      size1="Unable to advise. Please, contact the provider.";
+    } else {
+    sizeObj8=clothingItems[10].sizes.filter(function(item){
+      if(chest<clothingItems[10].sizes[0].chestMin){
+        chest=clothingItems[10].sizes[0].chestMin;
+      }
+      if(chest>=item.chestMin && chest<=item.chestMax){
+          return item;
+        }
+    });
+    
+     var values8=Object.values(sizeObj8);
+     size8=values8[0].size;
+
+    }
+     
+     
+    return document.getElementById('results').innerHTML=
+    '<li>'+'<b>'+clothingItems[4].name + ': ' + '</b>'+ size1 + '</li>' +
+    '<li>'+'<b>'+clothingItems[5].name + ': ' + '</b>'+ size2 + '</li>' +
+    '<li>'+'<b>'+clothingItems[6].name + ': ' + '</b>'+ size5 + '</li>'+
+    '<li>'+'<b>'+clothingItems[8].name + ': ' + '</b>'+ size6 + '</li>'+
+    '<li>'+'<b>'+clothingItems[10].name + ': ' + '</b>'+ size8 + '</li>'+
+    '<li>'+'<b>'+'T-shirt: ' + '</b>'+ size7 + '</li>';
+    
+  }
+  
+  </script>
+ 
+  </body>
+</html>
