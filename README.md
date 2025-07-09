@@ -4,4 +4,4 @@ The code combines the Javascript code and html wrapping in the same file because
 
 The tool allows to select sizes from a catalogue of items by inserting your measurements. It works in both cm and inch.
 
-<img alt="hero image" src="https://github.com/natyfromwonderland/natyfromwonderland/blob/main/readme-01.png">
+<img alt="hero image" src="https://github.com/natyfromwonderland/SizeSelectorTool/blob/main/sizeselector.PNG">
